@@ -13,7 +13,7 @@ bot.on('ready', () => {
 
 //when someone says something, console.logs it
 bot.on('message', message => {
-  console.log(message.author.username + ' said ' + message.content)
+  console.log(message.author.username + ': ' + message.content)
 })
 
 bot.login(token)

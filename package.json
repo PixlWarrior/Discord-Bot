@@ -1,0 +1,15 @@
+{
+  "name": "teamwork-bot",
+  "version": "1.0.0",
+  "description": "A Bot made my Nathan and Liam",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Nathan, Liam",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  }
+}

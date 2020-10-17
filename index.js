@@ -8,7 +8,7 @@ const keepalive = require('./keepalive.js')
 
 //init bot
 bot.on('ready', () => {
-  console.log(bot.user.username + 'is alive')
+  console.log(bot.user.username + ' is alive')
 });
 
 //when someone says something, console.logs it

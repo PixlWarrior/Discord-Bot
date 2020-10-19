@@ -18,6 +18,7 @@ bot.on('message', message => {
   console.log(message.author.username + ': ' + message.content)
 })
 
+//kick sequence
 bot.on('message', message => {
   if(!message.guild) return;
 
@@ -52,6 +53,7 @@ bot.on('message', message => {
   }
 });
 
+//ban sequence
 bot.on('message', message => {
   if(!message.guild) return;
 
@@ -86,4 +88,12 @@ bot.on('message', message => {
   }
 });
 
+//simple ping script
+bot.on('message', message => {
+
+  if(message.content === 'Ping', message.content === 'ping') {
+    message.channel.send('Pong!')
+  }
+
+});
 bot.login(token)         

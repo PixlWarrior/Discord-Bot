@@ -95,6 +95,10 @@ bot.on('message', message => {
     message.channel.send('Pong!')
   }
 
+  if(message.content === 'Pong', message.content === 'pong') {
+    message.reply('Wrong Way! Try saying \'Ping\' instead!')
+  }
+
 });
 
 bot.login(token)         

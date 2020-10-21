@@ -4,13 +4,14 @@ const bot = new Discord.Client();
 
 const token = process.env.BOT_TOKEN
 
-const keepalive = require('./keepalive.js')
+const keepalive = require('./src/keepalive.js')
 
 const pf = "$"
 
 //init bot
 bot.on('ready', () => {
   console.log(bot.user.username + ' is alive')
+  bot.user.setActivity(pf + "help for help")
 });
 
 //when someone says something, console.logs it
@@ -99,6 +100,19 @@ bot.on('message', message => {
     message.reply('Wrong Way! Try saying \'Ping\' instead!')
   }
 
+});
+
+bot.on('message', message => {
+  
+  if(message.content.startsWith(pf + 'help')) {
+    message.channel.send('**Help Page:**')
+    message.channel.send('The current Prefix is: `' + pf + '`')
+    message.channel.send('Try saying \'Ping\'')
+    message.channel.send('**For admins:**')
+    message.channel.send(pf + 'kick')
+    message.channel.send(pf + 'ban')
+  }
+  
 });
 
 bot.login(token)         

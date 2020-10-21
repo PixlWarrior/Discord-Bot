@@ -23,7 +23,7 @@ bot.on('message', message => {
 
 //kick sequence
 bot.on('message', message => {
-  if(message.author === !bot) {
+  if(message.author.username === !'BotBotBotBotBot') {
     if(!message.guild) return;
 
     if(message.content.startsWith(pf + 'kick')) {
@@ -60,7 +60,7 @@ bot.on('message', message => {
 
 //ban sequence
 bot.on('message', message => {
-  if(message.author === !bot) {
+  if(message.author.username === !'BotBotBotBotBot') {
     if(!message.guild) return;
 
     if(message.content.startsWith(pf + 'ban')) {
@@ -96,24 +96,24 @@ bot.on('message', message => {
 });
 
 //simple ping script
-bot.on('message', message => {
+//bot.on('message', message => {
+//
+//  if(message.content === 'Ping'|| message.content === 'ping') {
+//    message.channel.send('Pong!')
+//  }
 
-  if(message.content === 'Ping' || message.content === 'ping') {
-    message.channel.send('Pong!')
-  }
+//  if(message.content === 'Pong' || message.content === 'pong') {
+//    message.reply('Wrong Way! Try saying \'Ping\' instead!')
+//  }
 
-  if(message.content === 'Pong' || message.content === 'pong') {
-    message.reply('Wrong Way! Try saying \'Ping\' instead!')
-  }
-
-});
+//});
 
 bot.on('message', message => {
   
   if(message.content.startsWith(pf + 'help')) {
     message.channel.send('**Help Page:**')
     message.channel.send('The current Prefix is: `' + pf + '`')
-    message.channel.send('Try saying \'Ping\'')
+    //message.channel.send('Try saying \'Ping\'')
     message.channel.send('**For admins:**')
     message.channel.send(pf + 'kick \n' + pf + 'ban')
   }

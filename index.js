@@ -16,75 +16,81 @@ bot.on('ready', () => {
 
 //when someone says something, console.logs it
 bot.on('message', message => {
-  console.log(message.author.username + ': ' + message.content)
-})
+  if(message.author === !bot) {
+    console.log(message.author.username + ': ' + message.content)
+  }
+});
 
 //kick sequence
 bot.on('message', message => {
-  if(!message.guild) return;
+  if(message.author === !bot) {
+    if(!message.guild) return;
 
-  if(message.content.startsWith(pf + 'kick')) {
+    if(message.content.startsWith(pf + 'kick')) {
 
-    const user = message.mentions.users.first();
+      const user = message.mentions.users.first();
 
-    if(user) {
+      if(user) {
       
-      const member = message.guild.member(user);
+        const member = message.guild.member(user);
 
-      if(member) {
+        if(member) {
 
-        member
-        .kick()
-        .then(() => {
-          message.reply(`succesfully kicked ${user.tag}`);
-        })
-        .catch(err => {
-          message.reply('I was unable to kick the member');
+          member
+          .kick()
+          .then(() => {
+            message.reply(`succesfully kicked ${user.tag}`);
+          })
+          .catch(err => {
+            message.reply('I was unable to kick the member');
 
-          console.error(err);
-        })
+            console.error(err);
+          })
+        }
+        else {
+          message.reply('That member isn\'t in this guild!');
+        }
       }
       else {
-        message.reply('That member isn\'t in this guild!');
-      }
-    }
-    else {
       message.reply('You didn\'t mention the user you wanted to kick!')
+      }
     }
   }
 });
 
 //ban sequence
 bot.on('message', message => {
-  if(!message.guild) return;
+  if(message.author === !bot) {
+    if(!message.guild) return;
 
-  if(message.content.startsWith(pf + 'ban')) {
+    if(message.content.startsWith(pf + 'ban')) {
 
-    const user = message.mentions.users.first();
+      const user = message.mentions.users.first();
 
-    if(user) {
+      if(user) {
       
-      const member = message.guild.member(user);
+        const member = message.guild.member(user);
 
-      if(member) {
+        if(member) {
 
-        member
-        .ban()
-        .then(() => {
-          message.reply(`succesfully banned ${user.tag}`);
-        })
-        .catch(err => {
-          message.reply('I was unable to ban the member');
+          member
+          .ban()
+          .then(() => {
+           message.reply(`succesfully banned ${user.tag}`);
+         })
+         .catch(err => {
+           message.reply('I was unable to ban the member');
 
-          console.error(err);
-        })
+            console.error(err);
+          })
+        }
+        else {
+          message.reply('That member isn\'t in this guild!');
+        }
       }
       else {
-        message.reply('That member isn\'t in this guild!');
-      }
-    }
-    else {
       message.reply('You didn\'t mention the user you wanted to ban!')
+      }
     }
   }
 });
@@ -92,11 +98,11 @@ bot.on('message', message => {
 //simple ping script
 bot.on('message', message => {
 
-  if(message.content === 'Ping', message.content === 'ping') {
+  if(message.content === 'Ping' || message.content === 'ping') {
     message.channel.send('Pong!')
   }
 
-  if(message.content === 'Pong', message.content === 'pong') {
+  if(message.content === 'Pong' || message.content === 'pong') {
     message.reply('Wrong Way! Try saying \'Ping\' instead!')
   }
 
@@ -109,8 +115,7 @@ bot.on('message', message => {
     message.channel.send('The current Prefix is: `' + pf + '`')
     message.channel.send('Try saying \'Ping\'')
     message.channel.send('**For admins:**')
-    message.channel.send(pf + 'kick')
-    message.channel.send(pf + 'ban')
+    message.channel.send(pf + 'kick \n' + pf + 'ban')
   }
   
 });

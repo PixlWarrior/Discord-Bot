@@ -23,7 +23,7 @@ bot.on('message', message => {
 
 //kick sequence
 bot.on('message', message => {
-  if(message.author.username === !'BotBotBotBotBot') {
+  //if(message.author.username === !'BotBotBotBotBot') {
     if(!message.guild) return;
 
     if(message.content.startsWith(pf + 'kick')) {
@@ -55,12 +55,12 @@ bot.on('message', message => {
       message.reply('You didn\'t mention the user you wanted to kick!')
       }
     }
-  }
+  //}
 });
 
 //ban sequence
 bot.on('message', message => {
-  if(message.author.username === !'BotBotBotBotBot') {
+  //if(message.author.username === !'BotBotBotBotBot') {
     if(!message.guild) return;
 
     if(message.content.startsWith(pf + 'ban')) {
@@ -92,30 +92,38 @@ bot.on('message', message => {
       message.reply('You didn\'t mention the user you wanted to ban!')
       }
     }
-  }
+  //}
 });
 
-//simple ping script
-//bot.on('message', message => {
-//
-//  if(message.content === 'Ping'|| message.content === 'ping') {
-//    message.channel.send('Pong!')
-//  }
+  //simple ping script
+  bot.on('message', message => {
 
-//  if(message.content === 'Pong' || message.content === 'pong') {
-//    message.reply('Wrong Way! Try saying \'Ping\' instead!')
-//  }
+    if(message.content === 'Ping'|| message.content === 'ping') {
+      message.channel.send('Pong!')
+    }
 
-//});
+    if(message.content === 'Pong' || message.content === 'pong') {
+    message.reply('Wrong Way! Try saying \'Ping\' instead!')
+  }
+
+});
+
+bot.on('message', message => {
+
+  if(message.content === pf + 'desc') {
+    
+    message.channel.send('I am a barely functioning discord bot that is in heavy developememnt right now. Check back later for real results.');
+
+  }
+});
 
 bot.on('message', message => {
   
   if(message.content.startsWith(pf + 'help')) {
     message.channel.send('**Help Page:**')
     message.channel.send('The current Prefix is: `' + pf + '`')
-    //message.channel.send('Try saying \'Ping\'')
-    message.channel.send('**For admins:**')
-    message.channel.send(pf + 'kick \n' + pf + 'ban')
+    message.channel.send('Try saying \'Ping\'')
+    message.channel.send('do `' + pf + 'desc` for a description \n **For admins**\n`' + pf + 'kick`\n`' + pf + 'ban`')
   }
   
 });

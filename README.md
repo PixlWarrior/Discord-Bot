@@ -1,7 +1,7 @@
 # Discord Bot
 this bot is not good dont use yet
 
-I used the Discord.js package to create this bot
+I used the [Discord.js](https://discord.js.org) package to create this bot
 
 ## `.env` file
 

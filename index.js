@@ -31,30 +31,43 @@ bot.on("message", (message) => {
   let guildMember = message.guild.members.cache.find(
     (m) => m.id == message.author.id
   );
+
   if (!message.guild) return;
 
   if (message.content.startsWith(pf + "kick")) {
-    if (!guildMember.hasPermission("KICK_MEMBERS")) return; //Or return an error
+    if (!guildMember.hasPermission("KICK_MEMBERS")) {
+      return message.channel
+        .send("**Error**, you don't have enough permissions to kick this user")
+        .then((m) => m.delete(10000))
+        .catch((err) => console.error(err));
+    } else if (
+      !message.guild.members.cache
+        .find((m) => m.id == bot.user.id)
+        .hasPermission("KICK_MEMBERS")
+    ) {
+      return message.channel
+        .send("**Error**, I don't have enough permissions to kick this user")
+        .then((m) => m.delete(10000))
+        .catch((err) => console.error(err));
+    } else if (!guildMember.kickable) {
+      return message.channel
+        .send("**Error**, I am unable to kick this user")
+        .then((m) => m.delete(10000))
+        .catch((err) => console.error(err));
+    }
 
-    const user = message.mentions.members.first();
+    const member = message.mentions.members.first();
+    if (member) {
+      member
+        .kick()
+        .then(() => {
+          message.reply(`succesfully kicked ${member.tag}`);
+        })
+        .catch((err) => {
+          message.reply("I was unable to kick the member");
 
-    if (user) {
-      const member = message.guild.member(user);
-
-      if (member) {
-        member
-          .kick()
-          .then(() => {
-            message.reply(`succesfully kicked ${user.tag}`);
-          })
-          .catch((err) => {
-            message.reply("I was unable to kick the member");
-
-            console.error(err);
-          });
-      } else {
-        message.reply("That member isn't in this guild!");
-      }
+          console.error(err);
+        });
     } else {
       message.reply("You didn't mention the user you wanted to kick!");
     }

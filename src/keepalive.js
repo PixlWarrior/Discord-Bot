@@ -1,6 +1,12 @@
-var http = require('http');
+var http = require("http");
 
-http.createServer(function (req, res) {
-  res.write('Server is online, That is good.')
-  res.end()
-}).listen(8080); 
+const createServer = (port = 8080) => {
+  http
+    .createServer(function (req, res) {
+      res.write("Server is online, That is good.");
+      res.end();
+    })
+    .listen(port);
+};
+
+module.exports = { createServer: createServer };

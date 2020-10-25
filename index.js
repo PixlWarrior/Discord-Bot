@@ -1,131 +1,133 @@
-const Discord = require('discord.js');
+const Discord = require("discord.js");
 
 const bot = new Discord.Client();
 
-const token = process.env.BOT_TOKEN
+require("dotenv").config();
 
-const keepalive = require('./src/keepalive.js')
+const token = process.env.BOT_TOKEN;
 
-const pf = "$"
+const keepalive = require("./src/keepalive.js");
+
+keepalive.createServer(8080);
+
+const pf = "$";
 
 //init bot
-bot.on('ready', () => {
-  console.log(bot.user.username + ' is alive')
-  bot.user.setActivity(pf + "help for help")
+bot.on("ready", () => {
+  console.log(bot.user.username + " is alive");
+  bot.user.setActivity(pf + "help for help");
 });
 
 //when someone says something, console.logs it
-bot.on('message', message => {
-  if(message.author === !bot) {
-    console.log(message.author.username + ': ' + message.content)
+bot.on("message", (message) => {
+  if (message.author === !bot) {
+    console.log(message.author.username + ": " + message.content);
   }
 });
 
 //kick sequence
-bot.on('message', message => {
+bot.on("message", (message) => {
   //if(message.author.username === !'BotBotBotBotBot') {
-    if(!message.guild) return;
+  let guildMember = message.guild.members.cache.find(
+    (m) => m.id == message.author.id
+  );
+  if (!message.guild) return;
 
-    if(message.content.startsWith(pf + 'kick')) {
+  if (message.content.startsWith(pf + "kick")) {
+    if (!guildMember.hasPermission("KICK_MEMBERS")) return; //Or return an error
 
-      const user = message.mentions.users.first();
+    const user = message.mentions.members.first();
 
-      if(user) {
-      
-        const member = message.guild.member(user);
+    if (user) {
+      const member = message.guild.member(user);
 
-        if(member) {
-
-          member
+      if (member) {
+        member
           .kick()
           .then(() => {
             message.reply(`succesfully kicked ${user.tag}`);
           })
-          .catch(err => {
-            message.reply('I was unable to kick the member');
+          .catch((err) => {
+            message.reply("I was unable to kick the member");
 
             console.error(err);
-          })
-        }
-        else {
-          message.reply('That member isn\'t in this guild!');
-        }
+          });
+      } else {
+        message.reply("That member isn't in this guild!");
       }
-      else {
-      message.reply('You didn\'t mention the user you wanted to kick!')
-      }
+    } else {
+      message.reply("You didn't mention the user you wanted to kick!");
     }
+  }
   //}
 });
 
 //ban sequence
-bot.on('message', message => {
+bot.on("message", (message) => {
   //if(message.author.username === !'BotBotBotBotBot') {
-    if(!message.guild) return;
+  if (!message.guild) return;
 
-    if(message.content.startsWith(pf + 'ban')) {
+  if (message.content.startsWith(pf + "ban")) {
+    const user = message.mentions.users.first();
 
-      const user = message.mentions.users.first();
+    if (user) {
+      const member = message.guild.member(user);
 
-      if(user) {
-      
-        const member = message.guild.member(user);
-
-        if(member) {
-
-          member
+      if (member) {
+        member
           .ban()
           .then(() => {
-           message.reply(`succesfully banned ${user.tag}`);
-         })
-         .catch(err => {
-           message.reply('I was unable to ban the member');
+            message.reply(`succesfully banned ${user.tag}`);
+          })
+          .catch((err) => {
+            message.reply("I was unable to ban the member");
 
             console.error(err);
-          })
-        }
-        else {
-          message.reply('That member isn\'t in this guild!');
-        }
+          });
+      } else {
+        message.reply("That member isn't in this guild!");
       }
-      else {
-      message.reply('You didn\'t mention the user you wanted to ban!')
-      }
+    } else {
+      message.reply("You didn't mention the user you wanted to ban!");
     }
+  }
   //}
 });
 
-  //simple ping script
-  bot.on('message', message => {
-
-    if(message.content === 'Ping'|| message.content === 'ping') {
-      message.channel.send('Pong!')
-    }
-
-    if(message.content === 'Pong' || message.content === 'pong') {
-    message.reply('Wrong Way! Try saying \'Ping\' instead!')
+//simple ping script
+bot.on("message", (message) => {
+  if (message.content === "Ping" || message.content === "ping") {
+    message.channel.send("Pong!");
   }
 
-});
-
-bot.on('message', message => {
-
-  if(message.content === pf + 'desc') {
-    
-    message.channel.send('I am a barely functioning discord bot that is in heavy developememnt right now. Check back later for real results.');
-
+  if (message.content === "Pong" || message.content === "pong") {
+    message.reply("Wrong Way! Try saying 'Ping' instead!");
   }
 });
 
-bot.on('message', message => {
-  
-  if(message.content.startsWith(pf + 'help')) {
-    message.channel.send('**Help Page:**')
-    message.channel.send('The current Prefix is: `' + pf + '`')
-    message.channel.send('Try saying \'Ping\'')
-    message.channel.send('do `' + pf + 'desc` for a description \n **For admins**\n`' + pf + 'kick`\n`' + pf + 'ban`')
+bot.on("message", (message) => {
+  if (message.content === pf + "desc") {
+    message.channel.send(
+      "I am a barely functioning discord bot that is in heavy developememnt right now. Check back later for real results."
+    );
   }
-  
 });
 
-bot.login(token)         
+bot.on("message", (message) => {
+  if (message.content.startsWith(pf + "help")) {
+    message.channel.send("**Help Page:**");
+    message.channel.send("The current Prefix is: `" + pf + "`");
+    message.channel.send("Try saying 'Ping'");
+    message.channel.send(
+      "do `" +
+        pf +
+        "desc` for a description \n **For admins**\n`" +
+        pf +
+        "kick`\n`" +
+        pf +
+        "ban`"
+    );
+  }
+});
+
+bot.login(token);

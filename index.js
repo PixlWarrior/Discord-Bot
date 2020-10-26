@@ -12,6 +12,11 @@ keepalive.createServer(8080);
 
 const pf = "$";
 
+function getRandomInt(max) {
+  rn = Math.floor(Math.random() * Math.floor(max));
+}
+
+
 //init bot
 bot.on("ready", () => {
   console.log(bot.user.username + " is alive");
@@ -27,7 +32,6 @@ bot.on("message", (message) => {
 
 //kick sequence
 bot.on("message", (message) => {
-  //if(message.author.username === !'BotBotBotBotBot') {
   let guildMember = message.guild.members.cache.find(
     (m) => m.id == message.author.id
   );
@@ -72,12 +76,11 @@ bot.on("message", (message) => {
       message.reply("You didn't mention the user you wanted to kick!");
     }
   }
-  //}
 });
 
 //ban sequence
 bot.on("message", (message) => {
-  //if(message.author.username === !'BotBotBotBotBot') {
+
   if (!message.guild) return;
 
   if (message.content.startsWith(pf + "ban")) {
@@ -104,7 +107,7 @@ bot.on("message", (message) => {
       message.reply("You didn't mention the user you wanted to ban!");
     }
   }
-  //}
+
 });
 
 //simple ping script
@@ -116,13 +119,20 @@ bot.on("message", (message) => {
   if (message.content === "Pong" || message.content === "pong") {
     message.reply("Wrong Way! Try saying 'Ping' instead!");
   }
-});
-
-bot.on("message", (message) => {
-  if (message.content === pf + "desc") {
+  //description commamd
+  if (message.content === startsWith(pf + "desc")) {
     message.channel.send(
-      "I am a barely functioning discord bot that is in heavy developememnt right now. Check back later for real results."
+      "I am a barely functioning discord bot that is in heavy developememnt right now, but I'm coming along. Check back later for real results."
     );
+  }
+  //meme command (returns a random meme, picked from 3)
+  if(message.content === startsWith(pf + "meme")) {
+    getRandomInt(4)
+    if(rn === 1) return message.channel.send({file: ['/src/img/meme1.jpg']})
+
+    if(rn === 2) return message.channel.send({file: ['/src/img/meme2.jpeg']})
+
+    if(rn === 3) return message.channel.send({file: ['/src/img/meme3.jpeg']})
   }
 });
 

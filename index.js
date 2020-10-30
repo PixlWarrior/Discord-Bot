@@ -16,7 +16,6 @@ function getRandomInt(max) {
   rn = Math.floor(Math.random() * Math.floor(max));
 }
 
-
 //init bot
 bot.on("ready", () => {
   console.log(bot.user.username + " is alive");
@@ -120,29 +119,27 @@ bot.on("message", (message) => {
     message.reply("Wrong Way! Try saying 'Ping' instead!");
   }
   //description commamd
-  if (message.content === startsWith(pf + "desc")) {
+  if (message.content.startsWith(pf + "desc")) {
     message.channel.send(
       "I am a barely functioning discord bot that is in heavy developememnt right now, but I'm coming along. Check back later for real results."
     );
   }
   //meme command (returns a random meme, picked from 3)
-  if(message.content === startsWith(pf + "meme")) {
-    getRandomInt(4)
-    if(rn === 1) return message.channel.send({file: ['/src/img/meme1.jpg']})
+  //if(message.content.startsWith(pf + "meme")) {
+  //  getRandomInt(4)
+  //  if(rn === 1) return message.channel.send({file: ['https://drive.google.com/file/d/1BZNIw_3kaH0oQwv95KgUaUtncKmuBDwS/view?usp=sharing']})
 
-    if(rn === 2) return message.channel.send({file: ['/src/img/meme2.jpeg']})
+  //  if(rn === 2) return message.channel.send({file: ['/src/img/meme2.jpeghttps://drive.google.com/file/d/1BrAliPDCOC5jdqUjdr3GNWb-jzDnHknE/view?usp=sharing']})
 
-    if(rn === 3) return message.channel.send({file: ['/src/img/meme3.jpeg']})
-  }
+   // if(rn === 3) return message.channel.send({file: ['https://drive.google.com/file/d/1Bm4XhJL7CZtF-KwCwPc-v3J8j2vdMwxx/view?usp=sharing']})
+  //}
 });
 
 bot.on("message", (message) => {
   if (message.content.startsWith(pf + "help")) {
     message.channel.send("**Help Page:**");
     message.channel.send("The current Prefix is: `" + pf + "`");
-    message.channel.send("Try saying 'Ping'");
-    message.channel.send(
-      "do `" +
+    message.channel.send("Try saying 'Ping'\ndo `" +
         pf +
         "desc` for a description \n **For admins**\n`" +
         pf +
